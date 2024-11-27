@@ -33,7 +33,7 @@ namespace ViewModels
                 return;
             }
 
-            // Если ожидается закрывающая скобка для научной операции
+            // If a closing parenthesis is expected for a scientific operation
             if (isSciOpWaiting)
             {
                 InputText += ")";
@@ -42,24 +42,24 @@ namespace ViewModels
 
             try
             {
-                // Нормализуем строку ввода, чтобы заменить операторы
+                // Normalize the input string to replace operators
                 var inputString = NormalizeInputString();
                 var expression = new Expression(inputString);
                 var result = expression.Evaluate();
 
-                // Присваиваем результат в свойство CalculatedResult
+                // Assigning the result to a property CalculatedResult
                 CalculatedResult = result.ToString();
             }
             catch (Exception ex)
             {
-                // Если произошла ошибка, показываем "NaN"
+                // If an error occurs, we show "NaN"
                 CalculatedResult = "NaN";
             }
         }
 
         private string NormalizeInputString()
         {
-            // Маппинг для математических и научных операторов
+            // Mapping for mathematical and scientific operators
             Dictionary<string, string> _opMapper = new()
             {
                 {"×", "*"},
@@ -80,13 +80,13 @@ namespace ViewModels
 
             var retString = InputText;
 
-            // Применяем замену операторов
+            // We use operator replacement
             foreach (var key in _opMapper.Keys)
             {
                 retString = retString.Replace(key, _opMapper[key]);
             }
 
-            // Удаляем лишние пробелы, если они есть
+            // Remove extra spaces if there are any
             retString = retString.Replace(" ", string.Empty);
 
             return retString;
@@ -112,7 +112,7 @@ namespace ViewModels
         [RelayCommand]
         private void MathOperator(string op)
         {
-            // Если ожидается скобка для научной операции, закрываем ее
+            // If a parenthesis is expected for a scientific operation, close it
             if (isSciOpWaiting)
             {
                 InputText += ")";
@@ -124,7 +124,7 @@ namespace ViewModels
         [RelayCommand]
         private void RegionOperator(string op)
         {
-            // Если ожидается скобка для научной операции, закрываем ее
+            // If a parenthesis is expected for a scientific operation, close it
             if (isSciOpWaiting)
             {
                 InputText += ")";
